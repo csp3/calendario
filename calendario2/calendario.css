@@ -1,0 +1,81 @@
+.calAnterior, 
+.calSiguiente {
+	border: 2px solid #e5e5ee;
+	background-color: #f7f7d5; 
+    cursor: pointer;
+	border-radius: 2px;
+	width: 44px;
+	height: 30px;
+	font-size: 30px;
+	padding-bottom: 7px;
+}
+
+.calAnterior:hover, 
+.calSiguiente:hover {
+	border: 2px solid #ff2d2d; 
+	background-color: #f7f7d5;
+}
+
+.tablacal tr:nth-child(1) td {
+	border: 1px solid #9898f4; 
+}
+
+.tablacal tr:nth-child(2) td {
+	border: 1px solid #bcbcfe; 
+}
+
+.tablacal tr td div {
+	display: inline-block;
+}
+
+.tablacal {
+	text-align: center;
+}
+
+.tablaCalMos tr, td {
+	font-size: 12px;
+	min-width: 35px;
+	height: 18px;
+	border: 1px solid #f2e3e3; 
+	text-align: center; 
+}
+
+.tablaCalMos tr td:hover {
+	border: 1px solid #0000ff;	
+	cursor: pointer; 			
+}
+
+.idmes {
+	width: 145px;
+	font-size: 15px; 
+}
+
+.filasem {
+	text-align: left;
+}
+
+.classdia {
+	height: 20px;
+	background-color: #f7f7d5; 
+}
+ 
+.classosc {
+	background-color: #888777;
+}
+
+.dedia, 
+.denoche {
+	font-size: 14px;
+	cursor: pointer;
+	position: relative;
+	transform: rotate(-90deg);
+	top: -20px; 
+}
+
+.dedia {
+	right: -5px;
+}
+
+.denoche {
+	left: -9px; 
+} 

@@ -1,0 +1,46 @@
+@font-face {
+    font-family: 'consola';
+    src: url(Consolas.ttf);
+}
+#calAnterior, #calSiguiente {
+	border: 2px solid rgb(229, 229, 238);
+	background-color: rgb(247, 247, 213); 
+    cursor: pointer;
+	border-radius: 2px;
+	width: 44px;
+	height: 30px;
+	font-size: 30px;
+	padding-bottom: 7px;
+}
+#calAnterior:hover, #calSiguiente:hover {
+	border: 2px solid rgb(255, 45, 45); 
+	background-color: rgb(247, 247, 213);
+}
+td div {
+	display: inline-block;
+}
+#idmes {
+	width: 145px;
+	font-size: 15px;
+}
+#tablacal {
+    text-align: center;
+}
+tr,td {
+	font-size: 12px;
+	font-family: 'consola';
+	min-width: 35px;
+	height: 18px;
+	border: 1px solid rgb(242, 227, 227);
+}
+.filasem {
+	text-align: left;
+}
+.classdia {
+	height: 20px;
+	background-color: rgb(247, 247, 213);
+}
+
+td:hover {
+	border: 1px solid rgb(255, 45, 45);					
+}
