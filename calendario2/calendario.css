@@ -16,23 +16,23 @@
 	background-color: #f7f7d5;
 }
 
-.tablacal tr:nth-child(1) td {
+.tablaNombresMesSemana tr:nth-child(1) td {
 	border: 1px solid #9898f4; 
 }
 
-.tablacal tr:nth-child(2) td {
+.tablaNombresMesSemana tr:nth-child(2) td {
 	border: 1px solid #bcbcfe; 
 }
 
-.tablacal tr td div {
+.tablaNombresMesSemana tr td div {
 	display: inline-block;
 }
 
-.tablacal {
+.tablaNombresMesSemana {
 	text-align: center;
 }
 
-.tablaCalMos tr, td {
+.tablaDiasCalendario tr, td {
 	font-size: 12px;
 	min-width: 35px;
 	height: 18px;
@@ -40,17 +40,17 @@
 	text-align: center; 
 }
 
-.tablaCalMos tr td:hover {
+.tablaDiasCalendario tr td:hover {
 	border: 1px solid #0000ff;	
 	cursor: pointer; 			
 }
 
 .idmes {
 	width: 145px;
-	font-size: 15px; 
+	font-size: 13px; 
 }
 
-.filasem {
+.filasemana {
 	text-align: left;
 }
 

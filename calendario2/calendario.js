@@ -1,158 +1,200 @@
 'option explicit'
-var ladate = new Date();
-var secCalendario = document.getElementById('secCalendario'); 
-var tablaCal = document.createElement('table'); 
-var tablaCalMos = document.createElement('table');
-var trm;
-var tdm; 
-var tr1; 
-var tr2;
-var td1;
-var td2; 
-var tipocolor = 'claro'; 
+let lafecha = new Date();
+let secCalendario = document.getElementById('secCalendario'); 
+let tablaNombresMesSemana = document.createElement('table'); 
+let tablaDiasCalendario = document.createElement('table');
+let oscu = document.createElement('div'); 
+let clar = document.createElement('div'); 
+let trm;
+let tdm; 
+let tr1; 
+let tr2;
+let td1;
+let td2; 
+let tipocolor = 'claro'; 
+ 
+creartablaNombresMesSemana(); 
+crearTablaDiasCalendario(); 
+ 
+let mes = ["ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SETIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE"];
+let numdias = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
-var oscu = document.createElement('div'); 
-var clar = document.createElement('div'); 
+let mesa = lafecha.getMonth();
+let anioa = lafecha.getFullYear();
 
-// 
-crearTablaCal(); 
-crearTablaCalMos(); 
-// 
-mes = ["ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SETIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE"];
-numdias = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+document.getElementById("calAnterior").addEventListener("click", mesAnterior, false);
+document.getElementById("calSiguiente").addEventListener("click", mesSiguiente,  false);
 
-mesa = ladate.getMonth();
-anioa = ladate.getFullYear();
-
-document.getElementById("calAnterior").addEventListener("click", mesAntes, false);
-document.getElementById("calSiguiente").addEventListener("click", mesSigue, false);
-
+/**nombre del mes*/
 function nombreMes(mesa) 
 { 
-	document.getElementById('idmes').innerHTML = mes[mesa] + " - " + anioa;
+	document.getElementById('idmes').innerHTML = mes[mesa] + " del " + anioa;
 }
 
-function calcular(mesa, anioa) 
+/**llenar con dias el calendario*/
+function llenarDiasEnCalendario(mesa, anioa) 
 {
 	//anio bisiesto para numdias
 	(anioa % 4 == 0) ? numdias[1] = 29 : numdias[1] = 28;
 	//nombres de mes-anio
 	nombreMes(mesa);
 
-	var fil = 0, di = "", filcol;
+	let fil = 0, filacolumna;
 	for (let i = 1; i <= numdias[mesa]; i++) 
 	{
-		(i < 10) ? di = "0" + i : di = "" + i;
-		var d1 = new Date(anioa + "/" + (mesa + 1) + "/" + di);
+		let d1 = new Date(anioa + "/" + (mesa + 1) + "/" + i);
 		if (!isNaN(d1)) 
 		{
-			filcol = tablaCalMos.rows[fil].cells[d1.getDay()];
-			filcol.innerHTML = d1.getDate() + filcol.innerHTML;
+			filacolumna = tablaDiasCalendario.rows[fil].cells[d1.getDay()]; 
+			filacolumna.innerHTML = d1.getDate() + filacolumna.innerHTML; 
 
-			if (ladate.getDate() == filcol.innerHTML) 
-			{
-				filcol.style.background = '#efff68';
-			}
+			if (lafecha.getDate() == filacolumna.innerHTML) 
+				filacolumna.style.background = '#efff68';
 			else 
-			{
-				filcol.style.background = 'transparent';
-			}
+				filacolumna.style.background = 'transparent';
 		}
 		//saltar otra fila
 		((d1.getDay() + 1) % 7 == 0) ? fil++ : fil = fil;
 	}
 }
 
-function mesAntes() 
+/**ir al mes anterior*/
+function mesAnterior() 
 {
 	limpiarTabla();
 	//si llega a enero y retrocede
 	if (mesa > 0) 
-	{
 		mesa = mesa - 1;
-	}
 	else 
 	{
 		mesa = 11;
 		anioa = anioa - 1;
 	}
 	
-	calcular(mesa, anioa);
+	llenarDiasEnCalendario(mesa, anioa);
 
 	if(tipocolor == 'oscuro')
-		pintacol('#966666');
+		pintaDiaActual('#966666');
 	else 
-		pintacol('#efff68');
+		pintaDiaActual('#efff68');
 }
 
-function mesSigue() 
+/**ir al mes siguiente*/
+function mesSiguiente()  
 {
 	limpiarTabla();
 	//si llega a diciembre y sigue
 	if (mesa + 1 < 12) 
-	{
 		mesa = mesa + 1;
-	}
 	else 
 	{
 		mesa = 0;
 		anioa = anioa + 1;
 	}
 
-	calcular(mesa, anioa);
+	llenarDiasEnCalendario(mesa, anioa);
 	
 	if(tipocolor == 'oscuro')
-		pintacol('#966666');
+		pintaDiaActual('#966666');
 	else 
-		pintacol('#efff68');
+		pintaDiaActual('#efff68');
 }
 
+/**limpiar tabla*/
 function limpiarTabla() 
 {
 	for (i = 0; i < 6; i++) 
 	{
 		for (j = 0; j < 7; j++) 
 		{
-			tablaCalMos.rows[i].cells[j].innerHTML = "";
+			tablaDiasCalendario.rows[i].cells[j].innerHTML = "";
 		}
 	}
 }
 
-// crear tabla tablaCalMos
-function crearTablaCalMos()
+/**crear tabla con Dias de Calendario*/
+function crearTablaDiasCalendario()
 {
-	tablaCalMos.id = 'tablaCalMos';
-	tablaCalMos.className = 'tablaCalMos'; 
-	for (let i = 0; i < 6; i++) 
+	tablaDiasCalendario.id = 'tablaDiasCalendario';
+	tablaDiasCalendario.className = 'tablaDiasCalendario'; 
+	for (let i = 0; i < 7; i++) 
 	{	
 		trm = document.createElement('tr');
-		trm.classList.add('filasem');
-		tablaCalMos.appendChild(trm); 
-		for (let j = 0; j < 7; j++) 
+		trm.classList.add('filasemana');
+		tablaDiasCalendario.appendChild(trm); 
+		if(i == 6)
 		{
-			tdm = document.createElement('td'); 
-			trm.appendChild(tdm); 
+			tdm = document.createElement('td');
+			tdm.colSpan = '7'; 
+			tdm.addEventListener('click', function(){
+				mostrarFecha(this.innerHTML);
+			}); 
+			trm.appendChild(tdm);  
+		}
+		else
+		{
+			for (let j = 0; j < 7; j++) 
+			{
+				tdm = document.createElement('td'); 
+				tdm.addEventListener('click', function(){
+					mostrarFecha(this.innerHTML);
+				}); 
+				trm.appendChild(tdm); 
+			}
 		}
 	}
-	secCalendario.appendChild(tablaCalMos); 
+	secCalendario.appendChild(tablaDiasCalendario); 
 }
 
-// crer tabla tablacal
-function crearTablaCal() 
+/**mostrar fecha*/ 
+function mostrarFecha(dia)
 {
-	tablaCal.id = 'tablacal';
-	tablaCal.className = 'tablacal'; 
+	let fechaaux = new Date(); 
+	let hora = fechaaux.getHours();
+	let minuto = fechaaux.getMinutes(); 
+	let verhora = ''; 
+
+	if(hora > 12)
+	{
+		hora = hora - 12;
+		verhora = hora + ":" + minuto + " pm"; 
+	}
+	else
+	{
+		if(hora == 0)
+			hora = 12; 
+		else 
+		{
+			if(hora < 10)
+				hora = "0" + hora;
+		}
+		verhora =  hora + ":" + minuto + " am"; 
+	} 
+
+	tablaDiasCalendario.rows[6].cells[0].innerHTML = dia + " de " + document.getElementById('idmes').innerHTML + ' - ' + verhora;  
+}
+
+/**crer tabla tabla con Nombres de Mes y Semana*/
+function creartablaNombresMesSemana() 
+{
+	tablaNombresMesSemana.id = 'tablaNombresMesSemana';
+	tablaNombresMesSemana.className = 'tablaNombresMesSemana'; 
+	
 	tr1 = document.createElement('tr'); 
+	
 	td1 = document.createElement('td'); 
 	td1.colSpan = 7; 
+	
 	divcalAnterior = document.createElement('div'); 
 	divcalAnterior.id = 'calAnterior';
 	divcalAnterior.className = 'calAnterior';  
 	divcalAnterior.innerHTML = '⇠'; 
+	
 	dividmes = document.createElement('div'); 
 	dividmes.id = 'idmes';
 	dividmes.className = 'idmes'; 
 	dividmes.innerHTML = 'mes';
+
 	divcalSiguiente = document.createElement('div'); 
 	divcalSiguiente.id = 'calSiguiente'; 
 	divcalSiguiente.className = 'calSiguiente'; 
@@ -168,8 +210,11 @@ function crearTablaCal()
 	td1.appendChild(dividmes); 
 	td1.appendChild(divcalSiguiente); 
 	td1.appendChild(clar); 
+	
 	tr1.appendChild(td1); 
+	
 	tr2 = document.createElement('tr');
+	
 	let diascd = ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab']; 
 	for (let i = 0; i < 7; i++) 
 	{
@@ -178,55 +223,55 @@ function crearTablaCal()
 		td2.innerHTML = diascd[i]; 
 		tr2.appendChild(td2); 
 	}
-	tablaCal.appendChild(tr1);
-	tablaCal.appendChild(tr2); 
-	secCalendario.appendChild(tablaCal); 
+	
+	tablaNombresMesSemana.appendChild(tr1);
+	tablaNombresMesSemana.appendChild(tr2); 
+	secCalendario.appendChild(tablaNombresMesSemana); 
 }
 
-// 
-calcular(mesa, anioa);
-
-//
+/**pintar calendario en modo oscuro */
 oscu.addEventListener('click', function() { 
-	pintatabla('#7a6a7a','#fff','#888777');  
+	pintaTabla('#7a6a7a','#fff','#888777');  
 	tipocolor = 'oscuro';
-	pintacol('#966666');
+	pintaDiaActual('#966666');
 }); 
 
+/**pintar calendario en modo claro */
 clar.addEventListener('click', function() { 
-	pintatabla('#fff', '#000', '#f7f7d5'); 
+	pintaTabla('#fff', '#000', '#f7f7d5'); 
 	tipocolor = 'claro'; 
-	pintacol('#efff68'); 
+	pintaDiaActual('#efff68'); 
 }); 
-//
-function pintatabla(col1, col2, col3) 
+
+/**pintar tabla*/
+function pintaTabla(col1, col2, col3) 
 {
-	tablaCal.style.backgroundColor = col1; 
-	tablaCalMos.style.backgroundColor = col1; 
-	tablaCal.style.color = col2; 
-	tablaCalMos.style.color = col2; 
+	tablaNombresMesSemana.style.backgroundColor = col1; 
+	tablaDiasCalendario.style.backgroundColor = col1; 
+	tablaNombresMesSemana.style.color = col2; 
+	tablaDiasCalendario.style.color = col2; 
 	calAnterior.style.backgroundColor = col3;
 	calSiguiente.style.backgroundColor = col3; 
 	for (let i = 0; i < 7; i++) 
 	{
-		tablaCal.rows[1].cells[i].style.backgroundColor = col3; 	
-	}	
+		tablaNombresMesSemana.rows[1].cells[i].style.backgroundColor = col3; 	
+	} 
 }
-//
-function pintacol(col)
+
+/**pintar el dia actual*/
+function pintaDiaActual(col)
 {
 	for (let i = 1; i < 6; i++) 
 	{
 		for (let j = 0; j < 7; j++) 
 		{			
-			if (tablaCalMos.rows[i].cells[j].innerHTML == ladate.getDate()) 
-			{
-				tablaCalMos.rows[i].cells[j].style.backgroundColor = col; 
-			}
+			if (tablaDiasCalendario.rows[i].cells[j].innerHTML == lafecha.getDate()) 
+				tablaDiasCalendario.rows[i].cells[j].style.backgroundColor = col; 
 			else 
-			{
-				tablaCalMos.rows[i].cells[j].style.backgroundColor = 'transparent'; 
-			}
+				tablaDiasCalendario.rows[i].cells[j].style.backgroundColor = 'transparent'; 
 		}
 	}
 }
+
+/** llenado el calendario con dias*/ 
+llenarDiasEnCalendario(mesa, anioa);
